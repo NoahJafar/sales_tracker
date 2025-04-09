@@ -5,10 +5,12 @@ import pandas as pd
 from datetime import datetime
 
 # Google Sheets credentials
-creds = Credentials.from_service_account_file(
-    'sales-tracker-project-d11e8c84beca.json',
-    scopes=['https://www.googleapis.com/auth/spreadsheets']
-)
+import json
+import streamlit as st
+from google.oauth2.service_account import Credentials
+
+creds_dict = st.secrets["gcp_service_account"]
+creds = Credentials.from_service_account_info(creds_dict, scopes=["https://www.googleapis.com/auth/spreadsheets"])
 client = gspread.authorize(creds)
 
 # Load the spreadsheet and worksheets
